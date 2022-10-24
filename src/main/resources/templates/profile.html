@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мой Кринж Профиль</title>
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/style_profile.css">
+    <link rel="stylesheet" href="../static/css/parts/style_header.css">
+</head>
+<body class="body">
+    <header class="header">
+        <div class="logo">
+            <img src="../static/img/rr.png" alt="" height="70px" width="70px">
+            <h2 class="logo-text">Sweater</h2>
+        </div>
+        <ul class="navigation-list">
+            <li class="navigation-item">
+                <a class="navigation-link" href="/">Main</a>
+            </li>
+            <li class="navigation-item">
+                <a class="navigation-link" href="/send">Send news</a>
+            </li>
+            <li class="navigation-item">
+                <a class="navigation-link" href="/profile">Profile</a>
+            </li>
+            <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
+                <a class="navigation-link" href="/user ">Admin Profile</a>
+            </li>
+        </ul>
+        <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
+        <form th:action="@{/logout}" method="post">
+            <input class="logout" type="submit" value="Log out"/>
+        </form>
+    </header>
+    <section class="section-form">
+        <div class="container-form">
+            <h3 class="form-name">Change credential</h3>
+            <form class="form" th:action="@{/profile}" th:method="post">
+                <label >
+                    <input type="text" name="username"  placeholder="New Username" class="input">
+                </label>
+                <label >
+                    <input type="email" name="email" placeholder="New Email" class="input">
+                </label>
+                <label >
+                    <input type="password" name="password" placeholder="New Password" class="input">
+                </label>
+                <button  class="submit-button" type="submit">Change my data</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UserList</title>
+</head>
+<body>
+   <table>
+       <tr>
+           <th>Id</th>
+           <th>Username</th>
+           <th></th>
+       </tr>
+       <tbody>
+       <th:block th:each="user : ${users}">
+           <tr>
+               <td th:text="${user.id}"></td>
+               <td th:text="${user.username}"></td>
+               <td><a th:href="@{/user/{id} (id= ${user.getId})}">Edit</a></td>
+           </tr>
+       </th:block>
+
+       </tbody>
+   </table>
+
+</body>
+</html>

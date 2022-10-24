@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Отправить сообщение</title>
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/parts/style_header.css">
+    <link rel="stylesheet" href="../static/css/style_send.css">
+</head>
+<body class="body">
+<header class="header">
+  <div class="logo">
+    <img src="../static/img/rr.png" alt="" height="70px" width="70px">
+    <h2 class="logo-text">Sweater</h2>
+  </div>
+  <ul class="navigation-list">
+    <li class="navigation-item">
+      <a class="navigation-link" href="/">Main</a>
+    </li>
+    <li class="navigation-item">
+      <a class="navigation-link" href="">Send news</a>
+    </li>
+    <li class="navigation-item">
+      <a class="navigation-link" href="/profile">Profile</a>
+    </li>
+    <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
+      <a class="navigation-link" href="/user ">Admin Panel</a>
+    </li>
+  </ul>
+  <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
+  <form th:action="@{/logout}" method="post">
+    <input class="logout" type="submit" value="Log out"/>
+  </form>
+</header>
+<section>
+  <h2 class="page-title">Send a post</h2>
+    <div class="message-container">
+        <form class="form" th:action="@{/send}" method="post" enctype="multipart/form-data">
+            <label >
+                <textarea type="text" name="text" placeholder="What's new?" class="message-input"></textarea>
+                <div class="invalid-feedback">
+
+                </div>
+            </label>
+            <label >
+                <input type="file" name="file" value="Add picture" class="file">
+            </label>
+            <button  class="submit-button" type="submit">Send post</button>
+        </form>
+    </div>
+</section>
+</body>
+</html>

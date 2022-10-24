@@ -1,0 +1,112 @@
+.body {
+    background-color: black;
+}
+.section-form {
+    width: 444px;
+    margin: 15vh auto;
+    background-color: white;
+    box-shadow: 0 4px 18px rgba(255,255,255, 0.9);
+}
+.container-form {
+    padding: 31px 60px 38px ;
+}
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    justify-content: space-between;
+    align-items: center;
+    grid-column-gap: 4px;
+    grid-row-gap: 15px;
+    margin-bottom: 31px;
+}
+.form-name {
+    font-family: "Ubuntu 400", sans-serif;
+    font-size: 20px;
+    line-height: 20px;
+    color: #434343;
+    margin: 0;
+    position: relative;
+}
+.alternative-form {
+    display: inline-block;
+    font-family: "Ubuntu 400", sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    color: #3CB878;
+    justify-self: end;
+    transition: all 0.3s ease-out;
+}
+.alternative-form:hover {
+    color: #01813F;
+    text-decoration-line: underline;
+}
+.form {
+    display: grid;
+    grid-template-columns:1fr;
+    grid-row-gap: 16px;
+    margin: 0;
+}
+input {
+    width: 100%;
+    padding: 15px 19px;
+    border: 2px solid #F2F2F2;
+    border-radius: 4px;
+    font-family: "Ubuntu 400", sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    color: #434343;
+}
+input:focus {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.21);
+    outline: none;
+}
+input[type=checkbox] {
+    display: none;
+}
+.custom-checkbox {
+    height: 20px;
+    width: 20px;
+    border: 1px solid #F2F2F2;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    background-color:rgba(0, 0, 0, 0.0001);
+    padding:3px;
+}
+[type=checkbox]:checked + .custom-checkbox:before {
+    content:url("../img/check.svg");
+    position: absolute;
+    top: -3px;
+    left: 0;
+    font-size:23px;
+}
+.condition {
+    transition: all 0.3s ease-out;
+}
+.checkbox:hover .condition {
+    color: #01813F;
+    border-bottom: 1px solid #01813F;
+}
+.submit-button {
+    font-family: "Ubuntu 400", sans-serif;
+    font-size: 16px;
+    line-height: 16px;
+    color: #FFFFFF;
+    background-color: rgb(255,165,0);
+    border-radius: 4px;
+    padding: 16px;
+    border: none;
+    transition: all 0.3s ease-out;
+}
+.submit-button:hover {
+    background-color: rgb(255,140,0);
+}
+.condition {
+    color: #3CB878;
+}
+input.input::placeholder {
+    font-family: "Ubuntu 400", sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    color: #BEBEBE;;
+}

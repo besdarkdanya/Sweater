@@ -1,0 +1,43 @@
+.body {
+    background-color: black;
+}
+.page-title {
+    text-align: center;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 22px;
+    margin: 0;
+}
+.message-container {
+    border: 1px solid grey;
+    border-radius: 25px;
+    width: 600px;
+    margin: auto;
+    padding:30px 24px 10px 70px;
+}
+.message-input {
+    background-color: black;
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    resize: none;
+    min-height: 300px;
+    border: none;
+    border-bottom: 1px solid grey;
+    width: 500px;
+}
+.message-input:focus {
+    outline: none;
+}
+.submit-button {
+    color: #FFFFFF;
+    background-color: orange;
+    border-radius: 30px;
+    padding: 12px 30px;
+    transition: all ease-in 0.4s;
+}
+.submit-button:hover {
+    transform: scale(1.3);
+}
+
