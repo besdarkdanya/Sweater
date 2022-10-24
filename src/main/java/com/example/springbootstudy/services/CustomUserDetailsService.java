@@ -2,6 +2,7 @@ package com.example.springbootstudy.services;
 
 
 import com.example.springbootstudy.domain.User;
+import com.example.springbootstudy.exceptions.UserNotActiveException;
 import com.example.springbootstudy.repos.UserRepo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,11 +23,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException{
         User activeUserInfo = userRepo.findByUsername(userName);
         if(activeUserInfo == null){
             throw new UsernameNotFoundException("User not authorized.");
         }
+
         return activeUserInfo;
     }
 }

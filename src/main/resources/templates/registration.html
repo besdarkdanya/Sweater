@@ -35,7 +35,10 @@
       <h3 class="form-name">Registration</h3>
       <a class="alternative-form" th:href="@{/login}">Login</a>
     </div>
-
+    <ul>
+      <li th:each="error : ${map}" th:text="${error.getValue()}" class="error" />
+    </ul>
+    <p th:if="${passwordError}" th:text="${passwordError}" class="error"></p>
     <form  class="form" th:action="@{/registration}" method="post">
       <label >
         <input type="text" name="username"  placeholder="Username" class="input">
@@ -45,6 +48,9 @@
       </label>
       <label >
         <input type="password" name="password" placeholder="Password" class="input">
+      </label>
+      <label >
+        <input type="password" name="password2" placeholder="Password Confirm" class="input">
       </label>
       <label class="checkbox">
         <input type="checkbox" name="terms">

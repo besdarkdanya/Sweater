@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -44,7 +46,6 @@ public class MainController {
     public String main(Model model,@AuthenticationPrincipal User user) {
         if (user != null) {
             Iterable<Message> messages = messageRepo.findAll(Sort.by(Sort.Direction.DESC,"id"));
-
             model.addAttribute("messages",messages);
             return "main";
         }
@@ -68,13 +69,11 @@ public class MainController {
         message.setAuthor(user);
 
         if (bindingResult.hasErrors())  {
-            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
-
-            model.mergeAttributes(errorsMap);
-
-
+           Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+           model.addAttribute("map",errorsMap);
+           return "send";
         } else {
-            if (file != null) {
+            if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
                 File uploadDir = new File(uploadPath);
 
                 if (!uploadDir.exists()) {
@@ -87,11 +86,10 @@ public class MainController {
                 file.transferTo(new File(uploadPath + "/" + resultFilename));
 
                 message.setFilename(resultFilename);
-
             }
             messageRepo.save(message);
         }
-        Iterable<Message> messages = messageRepo.findAll();
+        Iterable<Message> messages = messageRepo.findAll(Sort.by(Sort.Direction.DESC,"id"));
         model.addAttribute("messages",messages);
 
         return "main";

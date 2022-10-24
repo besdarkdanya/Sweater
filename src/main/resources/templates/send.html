@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Отправить сообщение</title>
+    <title>Send a post</title>
     <link rel="stylesheet" href="../static/css/normalize.css">
     <link rel="stylesheet" href="../static/css/parts/style_header.css">
     <link rel="stylesheet" href="../static/css/style_send.css">
@@ -33,18 +33,15 @@
   </form>
 </header>
 <section>
-  <h2 class="page-title">Send a post</h2>
     <div class="message-container">
         <form class="form" th:action="@{/send}" method="post" enctype="multipart/form-data">
-            <label >
-                <textarea type="text" name="text" placeholder="What's new?" class="message-input"></textarea>
-                <div class="invalid-feedback">
-
-                </div>
-            </label>
-            <label >
-                <input type="file" name="file" value="Add picture" class="file">
-            </label>
+            <label for="text"></label>
+                <textarea id="text" type="text" name="text"  placeholder="What's new?" class="message-input"></textarea>
+            <ul>
+                <li th:each="error : ${map}" th:text="${error.getValue()}" class="error" />
+            </ul>
+            <label for="file" ></label>
+                <input  id="file" type="file" name="file" class="file">
             <button  class="submit-button" type="submit">Send post</button>
         </form>
     </div>

@@ -110,3 +110,18 @@ input.input::placeholder {
     line-height: 14px;
     color: #BEBEBE;;
 }
+.error {
+    color: red;
+    margin-bottom: 5px;
+}
+.invalid_input {
+    width: 100%;
+    padding: 15px 19px;
+    border: 2px solid red;
+    border-radius: 4px;
+    font-family: "Ubuntu 400", sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    color: #434343;
+}
+

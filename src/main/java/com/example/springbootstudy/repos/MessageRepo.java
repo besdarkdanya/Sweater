@@ -2,11 +2,14 @@ package com.example.springbootstudy.repos;
 
 import com.example.springbootstudy.domain.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
 
-public interface MessageRepo extends JpaRepository<Message,Integer> {
+
+@Repository
+public interface MessageRepo extends JpaRepository<Message,Long> {
     List<Message> findByTag(String tag);
 
 

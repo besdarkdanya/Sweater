@@ -11,7 +11,6 @@
     overflow: scroll;
     height: 75vh;
     padding-top: 10px;
-    border: 1px solid grey;
 }
 .message-item {
     padding-right:15px;

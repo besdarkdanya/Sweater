@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="ru">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
 <head>
   <title>Login </title>
   <meta charset="utf-8">
@@ -35,12 +35,17 @@
       <h3 class="form-name">Login</h3>
       <a class="alternative-form" href="/registration">Registration</a>
     </div>
+    <div th:if="${param.error}" th:text="${param.error}" class="error">
+
+    </div>
+    <div th:if="${message}" th:text="${message}">
+    </div>
     <form  class="form" th:action="@{/login}" method="post">
       <label >
-        <input type="text" name="username" placeholder="Username" class="input">
+        <input type="text" name="username" placeholder="Username"  th:class="${param.error}? invalid_input : input">
       </label>
       <label >
-        <input type="password" name="password" placeholder="Password" class="input">
+        <input type="password" name="password" placeholder="Password" th:class="${param.error}? invalid_input : input">
       </label>
       <button  class="submit-button" type="submit">Log In</button>
     </form>

@@ -26,7 +26,7 @@ public class UserService {
         if (userRepo.findByUsername(user.getUsername())!= null) {
             return false;
         } else {
-            user.setActive(true);
+            user.setActive(false);
             user.getRoles().add(Role.USER);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setActivationCode(UUID.randomUUID().toString());
@@ -56,6 +56,7 @@ public class UserService {
         }
 
         user.setActivationCode(null);
+        user.setActive(true);
         userRepo.save(user);
 
         return true;
