@@ -27,6 +27,7 @@
       <a class="navigation-link" href="/user ">Admin Panel</a>
     </li>
   </ul>
+    <img  class="avatar-picture" th:src="@{/img/{filename}(filename = ${avatar})}" width="70px" height="70px" >
   <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
   <form th:action="@{/logout}" method="post">
     <input class="logout" type="submit" value="Log out"/>

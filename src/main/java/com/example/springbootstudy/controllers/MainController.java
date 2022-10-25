@@ -47,13 +47,15 @@ public class MainController {
         if (user != null) {
             Iterable<Message> messages = messageRepo.findAll(Sort.by(Sort.Direction.DESC,"id"));
             model.addAttribute("messages",messages);
+            model.addAttribute("avatar",user.getFilename());
             return "main";
         }
         return "redirect:login";
     }
 
     @GetMapping("/send")
-    public String sendPage() {
+    public String sendPage(@AuthenticationPrincipal User user,Model model) {
+        model.addAttribute("avatar",user.getFilename());
         return "send";
     }
 
@@ -109,7 +111,8 @@ public class MainController {
     }
 
     @GetMapping("/profile")
-    public String myProfile() {
+    public String myProfile(@AuthenticationPrincipal User user,Model model) {
+        model.addAttribute("avatar",user.getFilename());
         return "profile";
     }
 

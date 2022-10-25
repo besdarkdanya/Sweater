@@ -33,6 +33,8 @@ public class User implements UserDetails {
     private String email;
     private String activationCode;
 
+    private String filename;
+
 
     public User() {
     }
@@ -56,6 +58,14 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
     public String getEmail() {
         return email;

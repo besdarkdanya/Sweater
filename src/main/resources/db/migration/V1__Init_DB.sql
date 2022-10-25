@@ -19,6 +19,7 @@ create table users (
                      email varchar(255),
                      password varchar(255) not null,
                      username varchar(255) not null,
+                     filename varchar(255),
                      primary key (id)
 ) engine=MyISAM;
 

@@ -17,6 +17,7 @@
     padding-left: 75px;
     border-bottom: 1px solid grey;
     padding-bottom: 90px;
+    position: relative;
 }
 .message-author {
     font-family: Arial,sans-serif;
@@ -25,6 +26,12 @@
     line-height: 20px;
     margin: 16px 0 10px;
     color: white;
+}
+.message-author-avatar {
+    border-radius: 50px;
+    position: absolute;
+    top: 0;
+    right: 535px;
 }
 .message-title {
     font-family: Arial,sans-serif;

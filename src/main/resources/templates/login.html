@@ -35,8 +35,8 @@
       <h3 class="form-name">Login</h3>
       <a class="alternative-form" href="/registration">Registration</a>
     </div>
-    <div th:if="${param.error}" th:text="${param.error}" class="error">
-
+    <div th:if="${param.error}"  class="error">
+      Invalid user data or you doesn't activate your account through email
     </div>
     <div th:if="${message}" th:text="${message}">
     </div>

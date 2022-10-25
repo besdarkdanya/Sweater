@@ -3,6 +3,7 @@ package com.example.springbootstudy.controllers;
 import com.example.springbootstudy.domain.User;
 import com.example.springbootstudy.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,16 +11,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 
 @Controller
 public class RegistrationController {
 
     private final UserService userService;
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Autowired
     public RegistrationController(UserService userService) {
@@ -32,7 +41,11 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addNewUser(@RequestParam("password2") String password2, @Valid User user, BindingResult bindingResult, Model model) {
+    public String addNewUser(@RequestParam("password2") String password2,
+                             @Valid User user,
+                             BindingResult bindingResult,
+                             Model model,
+                             @RequestParam("file") MultipartFile file) throws IOException {
 
         boolean isConfirmEmpty = password2.isEmpty();
 
@@ -52,10 +65,26 @@ public class RegistrationController {
             return "registration";
         }
 
+        if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
+            File uploadDir = new File(uploadPath);
+
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + "." + file.getOriginalFilename();
+
+            file.transferTo(new File(uploadPath + "/" + resultFilename));
+
+            user.setFilename(resultFilename);
+        }
+
         if (!userService.createUser(user)) {
             model.addAttribute("map","User with this username already exists");
             return "registration";
         }
+
 
         return "redirect:login";
     }

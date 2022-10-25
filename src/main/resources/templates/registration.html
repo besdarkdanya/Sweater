@@ -39,7 +39,7 @@
       <li th:each="error : ${map}" th:text="${error.getValue()}" class="error" />
     </ul>
     <p th:if="${passwordError}" th:text="${passwordError}" class="error"></p>
-    <form  class="form" th:action="@{/registration}" method="post">
+    <form  class="form" th:action="@{/registration}" method="post" enctype="multipart/form-data">
       <label >
         <input type="text" name="username"  placeholder="Username" class="input">
       </label>
@@ -52,6 +52,8 @@
       <label >
         <input type="password" name="password2" placeholder="Password Confirm" class="input">
       </label>
+      <label for="file" ></label>
+      <input  id="file" type="file" name="file" class="file">
       <label class="checkbox">
         <input type="checkbox" name="terms">
         <span class="custom-checkbox"></span>

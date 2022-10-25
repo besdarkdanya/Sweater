@@ -32,6 +32,7 @@
             <a class="navigation-link" href="/user ">Admin Panel</a>
         </li>
     </ul>
+    <img  class="avatar-picture" th:src="@{/img/{filename}(filename = ${avatar})}" width="70px" height="70px" >
     <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
     <form th:action="@{/logout}" method="post">
         <input class="logout" type="submit" value="Log out"/>
@@ -40,6 +41,7 @@
 <main class="main">
     <div class="message-container">
         <div class="message-item" th:each="message : ${messages}">
+            <img class="message-author-avatar" th:src="@{/img/{filename}(filename = ${message.getAuthor().getFilename()})}" width="50px" height="50px">
             <h4 class="message-author" th:text="${message.getAuthor()}"></h4>
             <p class="message-text" th:text="${message.getText}"></p>
             <div class="picture-container" th:if="${message.filename}">
