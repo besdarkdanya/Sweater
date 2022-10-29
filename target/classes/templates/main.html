@@ -26,10 +26,10 @@
             <a class="navigation-link" href="/send">Send news</a>
         </li>
         <li class="navigation-item">
-            <a class="navigation-link" href="/profile">Profile</a>
+            <a class="navigation-link" th:href="@{/user-messages/{user} (user = ${currentUserId})}">My messages</a>
         </li>
         <li class="navigation-item">
-            <a class="navigation-link" th:href="@{/user-messages/{user} (user = ${currentUserId})}">My messages</a>
+            <a class="navigation-link" href="/profile">Profile</a>
         </li>
         <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
             <a class="navigation-link" href="/user ">Admin Panel</a>

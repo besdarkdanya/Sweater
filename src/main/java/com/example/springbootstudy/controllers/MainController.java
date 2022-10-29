@@ -5,8 +5,6 @@ import com.example.springbootstudy.domain.User;
 import com.example.springbootstudy.repos.MessageRepo;
 import com.example.springbootstudy.services.MessageService;
 import com.example.springbootstudy.services.UserService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
@@ -139,6 +137,7 @@ public class MainController {
         model.addAttribute("messages",user.getMessages());
         model.addAttribute("isCurrentUser",currentUser.equals(user));
         model.addAttribute("currentUserId", user.getId());
+        model.addAttribute("avatar",currentUser.getFilename());
 
         return "user-messages";
     }

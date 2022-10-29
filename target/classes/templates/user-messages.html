@@ -21,15 +21,16 @@
       <a class="navigation-link" href="/send">Send news</a>
     </li>
     <li class="navigation-item">
-      <a class="navigation-link" href="/profile">Profile</a>
+      <a class="navigation-link" th:href="@{/user-messages/{user} (user = ${currentUserId})}">My messages</a>
     </li>
     <li class="navigation-item">
-      <a class="navigation-link"  th:href="@{/user-messages/{id} (id = ${currentUserId})}">My messages</a>
+      <a class="navigation-link" href="/profile">Profile</a>
     </li>
     <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
       <a class="navigation-link" href="/user ">Admin Panel</a>
     </li>
   </ul>
+  <img  class="avatar-picture" th:src="@{/img/{filename}(filename = ${avatar})}" width="70px" height="70px" >
   <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
   <form th:action="@{/logout}" method="post">
     <input class="logout" type="submit" value="Log out"/>
@@ -38,6 +39,7 @@
 <main class="main">
   <div class="message-container">
     <div class="message-item" th:each="message : ${messages}">
+      <img class="message-author-avatar" th:src="@{/img/{filename}(filename = ${message.getAuthor().getFilename()})}" width="50px" height="50px">
       <h4 class="message-author" th:text="${message.getAuthor()}"></h4>
       <form th:if="${isCurrentUser}" th:class="delete-icon-form" th:action="@{/message-delete/{message} (message = ${message.getId()})}" th:object="${message}" th:method="delete" >
         <input class="delete-icon-image" type="image" src="../static/img/delete-icon.png" alt="Submit Form" />

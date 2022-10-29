@@ -9,34 +9,34 @@
     <link rel="stylesheet" href="../static/css/parts/style_header.css">
 </head>
 <body class="body">
-    <header class="header">
-        <div class="logo">
-            <img src="../static/img/rr.png" alt="" height="70px" width="70px">
-            <h2 class="logo-text">Sweater</h2>
-        </div>
-        <ul class="navigation-list">
-            <li class="navigation-item">
-                <a class="navigation-link" href="/">Main</a>
-            </li>
-            <li class="navigation-item">
-                <a class="navigation-link" href="/send">Send news</a>
-            </li>
-            <li class="navigation-item">
-                <a class="navigation-link" href="/profile">Profile</a>
-            </li>
-            <li class="navigation-item">
-                <a class="navigation-link" th:href="@{/user-messages/{id} (id = ${currentUserId})}">My messages</a>
-            </li>
-            <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
-                <a class="navigation-link" href="/user ">Admin Profile</a>
-            </li>
-        </ul>
-        <img  class="avatar-picture" th:src="@{/img/{filename}(filename = ${avatar})}" width="70px" height="70px" >
-        <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
-        <form th:action="@{/logout}" method="post">
-            <input class="logout" type="submit" value="Log out"/>
-        </form>
-    </header>
+<header class="header">
+    <div class="logo">
+        <img src="../static/img/rr.png" alt="" height="70px" width="70px">
+        <h2 class="logo-text">Sweater</h2>
+    </div>
+    <ul class="navigation-list">
+        <li class="navigation-item">
+            <a class="navigation-link" href="/">Main</a>
+        </li>
+        <li class="navigation-item">
+            <a class="navigation-link" href="/send">Send news</a>
+        </li>
+        <li class="navigation-item">
+            <a class="navigation-link" th:href="@{/user-messages/{user} (user = ${currentUserId})}">My messages</a>
+        </li>
+        <li class="navigation-item">
+            <a class="navigation-link" href="/profile">Profile</a>
+        </li>
+        <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
+            <a class="navigation-link" href="/user ">Admin Panel</a>
+        </li>
+    </ul>
+    <img  class="avatar-picture" th:src="@{/img/{filename}(filename = ${avatar})}" width="70px" height="70px" >
+    <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
+    <form th:action="@{/logout}" method="post">
+        <input class="logout" type="submit" value="Log out"/>
+    </form>
+</header>
     <section class="section-form">
         <div class="container-form">
             <h3 class="form-name">Change credential</h3>

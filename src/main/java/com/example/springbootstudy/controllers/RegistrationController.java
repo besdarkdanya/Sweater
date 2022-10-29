@@ -77,6 +77,8 @@ public class RegistrationController {
             file.transferTo(new File(uploadPath + "/" + resultFilename));
 
             user.setFilename(resultFilename);
+        } else {
+            user.setFilename("default_user_avatar");
         }
 
         try {
