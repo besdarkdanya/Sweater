@@ -25,7 +25,7 @@
       <a class="navigation-link" href="/profile">Profile</a>
     </li>
     <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
-      <a class="navigation-link" href="/user ">Admin Panel</a>
+      <a class="navigation-link" href="/admin-panel">Admin Panel</a>
     </li>
   </ul>
 </header>
@@ -35,10 +35,10 @@
       <h3 class="form-name">Registration</h3>
       <a class="alternative-form" th:href="@{/login}">Login</a>
     </div>
-    <ul>
+    <ul th:if="${!map.isEmpty()}">
       <li th:each="error : ${map}" th:text="${error.getValue()}" class="error" />
     </ul>
-    <p th:if="${passwordError}" th:text="${passwordError}" class="error"></p>
+    <p th:if="${validationError}" th:text="${validationError}" class="error"></p>
     <form  class="form" th:action="@{/registration}" method="post" enctype="multipart/form-data">
       <label >
         <input type="text" name="username"  placeholder="Username" class="input">

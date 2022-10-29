@@ -18,7 +18,7 @@
             <a class="navigation-link" href="/">Main</a>
         </li>
         <li class="navigation-item">
-            <a class="navigation-link" href="/send">Send news</a>
+            <a class="navigation-link" href="/send-message">Send news</a>
         </li>
         <li class="navigation-item">
             <a class="navigation-link" th:href="@{/user-messages/{user} (user = ${currentUserId})}">My messages</a>
@@ -27,7 +27,7 @@
             <a class="navigation-link" href="/profile">Profile</a>
         </li>
         <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
-            <a class="navigation-link" href="/user ">Admin Panel</a>
+            <a class="navigation-link" href="/admin-panel">Admin Panel</a>
         </li>
     </ul>
     <img  class="avatar-picture" th:src="@{/img/{filename}(filename = ${avatar})}" width="70px" height="70px" >
@@ -38,14 +38,15 @@
 </header>
 <section>
     <div class="message-container">
-        <form class="form" th:action="@{/send}" method="post" enctype="multipart/form-data">
+        <form class="form" th:action="@{/send-message}" method="post" enctype="multipart/form-data">
             <label for="text"></label>
                 <textarea id="text" type="text" name="text"  placeholder="What's new?" class="message-input"></textarea>
             <ul>
-                <li th:each="error : ${map}" th:text="${error.getValue()}" class="error" />
+                <li th:each="error : ${validationErrors}" th:text="${error.getValue()}" class="error" />
             </ul>
-            <label for="file" ></label>
-                <input  id="file" type="file" name="file" class="file">
+            <label>
+                <input type="file" name="file" class="file">
+            </label>
             <button  class="submit-button" type="submit">Send post</button>
         </form>
     </div>

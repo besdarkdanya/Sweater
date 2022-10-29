@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/admin-panel")
 @PreAuthorize("hasAuthority('ADMIN')")
-public class UserController {
+public class AdminController {
 
     private final UserRepo userRepo;
 
-    public UserController(UserRepo userRepo) {
+    public AdminController(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 
