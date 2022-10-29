@@ -78,7 +78,7 @@ public class RegistrationController {
 
             user.setFilename(resultFilename);
         } else {
-            user.setFilename("default_user_avatar");
+            user.setFilename("default_user_avatar.png");
         }
 
         try {
