@@ -4,6 +4,7 @@ import com.example.springbootstudy.domain.User;
 import com.example.springbootstudy.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -53,7 +53,6 @@ public class RegistrationController {
             model.addAttribute("password2Error","Password confirmation can't be empty");
         }
 
-
         if (!user.getPassword().equals(password2)) {
             model.addAttribute("passwordError","Passwords are not the same");
             return "registration";
@@ -80,11 +79,12 @@ public class RegistrationController {
             user.setFilename(resultFilename);
         }
 
-        if (!userService.createUser(user)) {
+        try {
+            userService.createUser(user);
+        } catch (UsernameNotFoundException exception) {
             model.addAttribute("map","User with this username already exists");
             return "registration";
         }
-
 
         return "redirect:login";
     }

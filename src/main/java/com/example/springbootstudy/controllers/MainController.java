@@ -3,7 +3,10 @@ package com.example.springbootstudy.controllers;
 import com.example.springbootstudy.domain.Message;
 import com.example.springbootstudy.domain.User;
 import com.example.springbootstudy.repos.MessageRepo;
+import com.example.springbootstudy.services.MessageService;
 import com.example.springbootstudy.services.UserService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
@@ -11,10 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -28,14 +28,17 @@ import java.util.UUID;
 @Controller
 public class MainController {
 
-    MessageRepo messageRepo;
+    private final MessageRepo messageRepo;
 
     private final UserService userService;
 
+    private final MessageService messageService;
+
     @Autowired
-    public MainController(MessageRepo messageRepo,UserService userService) {
+    public MainController(MessageRepo messageRepo,UserService userService,MessageService messageService) {
         this.messageRepo = messageRepo;
         this.userService = userService;
+        this.messageService = messageService;
     }
 
     @Value("${upload.path}")
@@ -48,6 +51,7 @@ public class MainController {
             Iterable<Message> messages = messageRepo.findAll(Sort.by(Sort.Direction.DESC,"id"));
             model.addAttribute("messages",messages);
             model.addAttribute("avatar",user.getFilename());
+            model.addAttribute("currentUserId", user.getId());
             return "main";
         }
         return "redirect:login";
@@ -56,6 +60,7 @@ public class MainController {
     @GetMapping("/send")
     public String sendPage(@AuthenticationPrincipal User user,Model model) {
         model.addAttribute("avatar",user.getFilename());
+        model.addAttribute("currentUserId", user.getId());
         return "send";
     }
 
@@ -93,6 +98,8 @@ public class MainController {
         }
         Iterable<Message> messages = messageRepo.findAll(Sort.by(Sort.Direction.DESC,"id"));
         model.addAttribute("messages",messages);
+        model.addAttribute("avatar",user.getFilename());
+        model.addAttribute("currentUserId", user.getId());
 
         return "main";
     }
@@ -113,6 +120,7 @@ public class MainController {
     @GetMapping("/profile")
     public String myProfile(@AuthenticationPrincipal User user,Model model) {
         model.addAttribute("avatar",user.getFilename());
+        model.addAttribute("currentUserId", user.getId());
         return "profile";
     }
 
@@ -122,5 +130,25 @@ public class MainController {
         userService.updateProfile(currentUser,user);
 
         return "redirect:profile";
+    }
+
+    @GetMapping("/user-messages/{user}")
+    public String getMyMessagesPage(@AuthenticationPrincipal User currentUser,
+                                    @PathVariable User user,
+                                    Model model) {
+        model.addAttribute("messages",user.getMessages());
+        model.addAttribute("isCurrentUser",currentUser.equals(user));
+        model.addAttribute("currentUserId", user.getId());
+
+        return "user-messages";
+    }
+
+    @DeleteMapping("/message-delete/{message}")
+    public String deleteMessage(@PathVariable Message message,
+                                @AuthenticationPrincipal User currentUser) {
+
+        messageService.deleteMessage(message);
+
+        return "redirect:/user-messages/" + currentUser.getId();
     }
 }

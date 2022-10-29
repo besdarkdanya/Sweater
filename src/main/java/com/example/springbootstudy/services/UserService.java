@@ -6,9 +6,12 @@ import com.example.springbootstudy.domain.User;
 import com.example.springbootstudy.repos.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @Service
@@ -21,8 +24,12 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final SmtpMailSender mailService;
 
+    @Value("${hostname}")
+    private String hostname;
 
-    public boolean createUser(User user) {
+
+    public boolean createUser(User user) throws UsernameNotFoundException {
+
         if (userRepo.findByUsername(user.getUsername())!= null) {
             return false;
         } else {
@@ -36,8 +43,9 @@ public class UserService {
             if (!user.getEmail().isEmpty()) {
                 String message = String.format(
                         "Hello %s \n" +
-                                "Welcome to Sweater. Please, visit next link: http://localhost:8080/activate/%s"
+                                "Welcome to Sweater. Please, visit next link: http://%s/activate/%s"
                         ,user.getUsername()
+                        ,hostname
                         ,user.getActivationCode()
                 );
 

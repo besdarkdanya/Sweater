@@ -11,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -35,6 +36,16 @@ public class User implements UserDetails {
 
     private String filename;
 
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Message> messageSet;
+
+    public Set<Message> getMessages() {
+        return messageSet;
+    }
+
+    public void setMessageSet(Set<Message> messageSet) {
+        this.messageSet = messageSet;
+    }
 
     public User() {
     }
@@ -121,6 +132,22 @@ public class User implements UserDetails {
         return username;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     //security
 
