@@ -25,14 +25,6 @@ public class MessageController {
     private final MessageRepo messageRepo;
     private final MessageService messageService;
 
-    @GetMapping("/send-message")
-    public String sendMessagePage(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("avatar",user.getFilename());
-        model.addAttribute("currentUserId", user.getId());
-        return "send";
-    }
-
-
     @PostMapping("/send-message")
     public String sendNewMessage(@AuthenticationPrincipal User user,
                                  @Valid Message message,
@@ -46,25 +38,35 @@ public class MessageController {
         if (bindingResult.hasErrors())  {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.addAttribute("validationErrors",errorsMap);
-            return "send";
+            return "main";
         }
 
-        message.setFilename(fileService.getFilenameForUserAvatar(file));
+        message.setFilename(fileService.getFilenameForMessagePicture(file));
         messageRepo.save(message);
 
         return "redirect:/";
     }
 
-    @GetMapping("/user-messages/{user}")
-    public String getMyMessagesPage(@AuthenticationPrincipal User currentUser,
+    @GetMapping("/page/{user}")
+    public String getProfilePage(@AuthenticationPrincipal User currentUser,
                                     @PathVariable User user,
                                     Model model) {
         model.addAttribute("messages",user.getMessages());
-        model.addAttribute("isCurrentUser",currentUser.equals(user));
-        model.addAttribute("currentUserId", user.getId());
-        model.addAttribute("avatar",currentUser.getFilename());
+        try {
+            model.addAttribute("currentUserId", user.getId());
+            model.addAttribute("userProfileAvatar",user.getAvatarFilename());
+            model.addAttribute("usernameOfThisPage",user.getUsername());
+            model.addAttribute("totalAmountOfTweets",user.getMessageSet().size() + " Tweets");
+            model.addAttribute("userBackgroundImage",user.getBackgroundFilename());
+            model.addAttribute("userProfileDescription",user.getDescription());
+            model.addAttribute("Following",user.getSubscriptions().size());
+            model.addAttribute("Followers",user.getSubscribers().size());
+            model.addAttribute("isCurrentUser",currentUser.equals(user));
+        } catch (Exception e) {
+            model.addAttribute("currentUserId",false);
+        }
 
-        return "user-messages";
+        return "profile";
     }
 
     @DeleteMapping("/message-delete/{message}")

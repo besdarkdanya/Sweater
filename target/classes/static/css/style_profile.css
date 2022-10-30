@@ -1,6 +1,62 @@
 .body {
     background-color: black;
 }
+.header {
+    display: flex;
+    padding: 20px 35px;
+    align-items: center;
+    background-color: black;
+    justify-content: space-between;
+}
+.logo {
+    display: flex;
+    align-items: center;
+}
+.logo-text {
+    padding-left: 15px;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 22px;
+    color: white;
+    margin: 0;
+}
+.navigation-list {
+    display: flex;
+    list-style-type: none;
+    margin: 0 0 0 100px;
+    padding: 0;
+}
+.navigation-link {
+    margin-right: 30px;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 18px;
+    color: white;
+}
+.navigation-link:hover {
+    text-decoration: underline white;
+}
+.logout {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    color: white;
+    background-color: black;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 22px;
+    margin: 0;
+    transition: all 0.7s ease-out;
+}
+.logout:hover {
+    transform: scale(1.2);
+}
+.user-in {
+    margin-bottom: 0;
+    color: white;
+    padding-right: 25px;
+    margin-left: 250px;
+}
 .section-form {
     width: 444px;
     margin: 15vh auto;
@@ -109,4 +165,16 @@ input.input::placeholder {
     font-size: 14px;
     line-height: 14px;
     color: #BEBEBE;;
+}
+.avatar-input-label {
+    position: relative;
+    padding-left: 25px;
+    text-decoration: underline black;
+}
+.icon-add-avatar {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }

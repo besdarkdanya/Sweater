@@ -57,7 +57,8 @@ public class RegistrationController {
             return "registration";
         }
 
-        user.setFilename(fileService.getFilenameForMessagePicture(file));
+        user.setAvatarFilename(fileService.getFilenameForUserAvatar(file));
+        user.setBackgroundFilename("default_background_image.jpeg");
 
         try {
             userService.createUser(user);

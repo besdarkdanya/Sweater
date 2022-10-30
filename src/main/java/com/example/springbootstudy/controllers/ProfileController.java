@@ -6,8 +6,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,15 +21,21 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String myProfile(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("avatar",user.getFilename());
+        model.addAttribute("avatar",user.getAvatarFilename());
         model.addAttribute("currentUserId", user.getId());
-        return "profile";
+        return "user-settings";
     }
 
     @PostMapping("/profile")
-    public String editUser(@AuthenticationPrincipal User currentUser ,User user) {
+    public String editUser(@AuthenticationPrincipal User currentUser ,
+                           @RequestParam(required = false) MultipartFile file,
+                           User user,
+                           BindingResult bindingResult,
+                           Model model) throws IOException {
 
-        userService.updateProfile(currentUser,user);
+        model.addAttribute("map",ControllerUtils.getErrors(bindingResult));
+
+        userService.updateProfile(currentUser,user,file);
 
         return "redirect:profile";
     }

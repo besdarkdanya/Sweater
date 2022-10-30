@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.UUID;
 
 @Service
@@ -21,10 +24,10 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final SmtpMailSender mailService;
+    private final FileService fileService;
 
     @Value("${hostname}")
     private String hostname;
-
 
     public boolean createUser(User user) throws UsernameNotFoundException {
 
@@ -68,23 +71,27 @@ public class UserService {
         return true;
     }
 
-    public void updateProfile(User currentUser, User editUser ) {
+    public void updateProfile(User currentUser, User editedUserInfo,MultipartFile file) throws IOException {
 
-       String editUsername = editUser.getUsername();
-       String editEmail = editUser.getEmail();
-       String editPassword = editUser.getPassword();
-
-       if (!editUsername.isEmpty()) {
-           currentUser.setUsername(editUsername);
+       if (editedUserInfo.getUsername() != null) {
+           currentUser.setUsername(editedUserInfo.getUsername());
+       } else {
+           currentUser.setUsername(currentUser.getUsername());
        }
 
-        if (!editEmail.isEmpty()) {
-            currentUser.setEmail(editEmail);
+        if (editedUserInfo.getEmail() != null) {
+            currentUser.setEmail(editedUserInfo.getEmail());
+        } else {
+            currentUser.setEmail(currentUser.getEmail());
         }
 
-        if (!editPassword.isEmpty()) {
-            currentUser.setPassword(passwordEncoder.encode(editPassword));
+        if (editedUserInfo.getPassword() != null) {
+            currentUser.setPassword(passwordEncoder.encode(editedUserInfo.getPassword()));
+        } else {
+            currentUser.setPassword(currentUser.getPassword());
         }
+
+        currentUser.setAvatarFilename(fileService.getFilenameForUserAvatar(file));
 
         userRepo.save(currentUser);
 

@@ -1,23 +1,171 @@
 .body {
     background-color: black;
 }
-.main {
-    padding-top: 20px;
-}
-.message-container {
-    width: 597px;
-    margin: 0 auto;
+.header {
+    display: flex;
+    padding: 20px 35px;
+    align-items: center;
     background-color: black;
-    overflow: scroll;
-    height: 75vh;
-    padding-top: 10px;
+    justify-content: space-around;
+}
+.logo {
+    display: flex;
+    align-items: center;
+}
+.logo-text {
+    padding-left: 15px;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 22px;
+    color: white;
+    margin: 0;
+}
+.navigation-list {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.navigation-link {
+    margin-right: 30px;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 18px;
+    color: white;
+}
+.navigation-link:hover {
+    text-decoration: underline white;
+}
+.logout {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid white;
+    color: white;
+    background-color: black;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 22px;
+    margin: 0;
+    transition: all 0.7s ease-out;
+}
+.logout:hover {
+    transform: scale(1.2);
+}
+.user-in {
+    margin-bottom: 0;
+    color: white;
+    padding-right: 25px;
+}
+.sticky-header {
+    background: rgba(0, 0, 0, 1);
+    padding:10px 0 3px 18px;
+    width: 600px;
+    margin: auto;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-left:1px solid grey;
+    border-right:1px solid grey;
+}
+.back-link-header {
+    align-self: center;
+    grid-area: icon;
+    height: 35px;
+    width: 35px;
+    padding-top: 7px;
+}
+.back-icon {
+    height:15px;
+    width:15px;
+    margin-right:40px;
+    grid-area: icon;
+}
+.sticky-header-main {
+    font-family: "Ubuntu 400", sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 24px;
+    margin: 0;
+    padding-top: 6px;
+    padding-left: 6px;
+    color: white;
+
+}
+.send-tweet {
+    margin: auto;
+    width: 600px;
+    padding: 30px 17px 12px 80px;
+    position: relative;
+    border-left:1px solid grey;
+    border-right:1px solid grey;
+    border-bottom: 1px solid grey;
+
+}
+.send-form-wrapper {
+    display: flex;
+    align-items: center;
+}
+.submit-button {
+    background-color: rgb(28,155,239);
+    color: #FFFFFF;
+    font-family: sans-serif;
+    padding: 12px 23px;
+    border-radius: 35px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    outline: none;
+    border: 0;
+    margin-left:350px;
+}
+.icon-picture-add {
+    height: 17px;
+    width: 17px;
+    cursor: pointer;
+}
+.profile-avatar-picture {
+    position: absolute;
+    top: 20px;
+    left: 17px;
+    border-radius: 50%;
+}
+.message-input {
+    background-color: black;
+    color: white;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    resize: none;
+    min-height: 100px;
+    border: none;
+    width: 500px;
+}
+.message-input:focus, input:focus {
+    outline: none;
+}
+::placeholder {
+    color: grey;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.news-feed {
+    width: 600px;
+    border-left:1px solid grey;
+    border-right:1px solid grey;
+    margin: auto;
+    padding: 0;
 }
 .message-item {
-    padding-right:15px;
-    padding-left: 75px;
     border-bottom: 1px solid grey;
-    padding-bottom: 90px;
+    padding: 20px 15px 90px 75px;
     position: relative;
+}
+.author-link {
+    display: flex;
+}
+.author-link:hover .message-author {
+    text-decoration: underline white;
 }
 .message-author {
     font-family: Arial,sans-serif;
@@ -27,10 +175,18 @@
     margin: 16px 0 10px;
     color: white;
 }
+.message-author-tag {
+    color: rgb(113, 118, 123);
+    line-height: 16px;
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 5px;
+    padding-top: 5px;
+}
 .message-author-avatar {
     border-radius: 50px;
     position: absolute;
-    top: 0;
+    top: 35px;
     right: 535px;
 }
 .message-title {
@@ -51,14 +207,17 @@
 }
 .picture-container {
     width: 503px;
-    margin: 0 auto;
-    border-radius: 50px;
+    max-height: 400px;
+}
+.message-picture {
+    margin-top: 20px;
+    max-height: 400px;
 }
 .delete-icon-form {
     width: 14px;
     height: 14px;
     position: absolute;
-    top: 0;
+    top: 27px;
     left: 565px;
 }
 .delete-icon-image {

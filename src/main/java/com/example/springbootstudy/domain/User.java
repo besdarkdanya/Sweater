@@ -34,10 +34,25 @@ public class User implements UserDetails {
     private String email;
     private String activationCode;
 
-    private String filename;
+    private String avatarFilename;
+    private String backgroundFilename;
+    private String description;
 
     @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Message> messageSet;
+
+    @ManyToMany
+    @JoinTable(name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "channel_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subscriber_id")})
+    private Set<User> subscribers = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "subscriber_id")},
+            inverseJoinColumns = {@JoinColumn(name = "channel_id")})
+    private Set<User> subscriptions = new HashSet<>();
+
 
     public Set<Message> getMessages() {
         return messageSet;
@@ -45,6 +60,22 @@ public class User implements UserDetails {
 
     public void setMessageSet(Set<Message> messageSet) {
         this.messageSet = messageSet;
+    }
+
+    public Set<User> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(Set<User> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public Set<User> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(Set<User> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 
     public User() {
@@ -69,13 +100,20 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-
-    public String getFilename() {
-        return filename;
+    public String getBackgroundFilename() {
+        return backgroundFilename;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setBackgroundFilename(String backgroundFilename) {
+        this.backgroundFilename = backgroundFilename;
+    }
+
+    public String getAvatarFilename() {
+        return avatarFilename;
+    }
+
+    public void setAvatarFilename(String filename) {
+        this.avatarFilename = filename;
     }
 
     public String getEmail() {

@@ -8,50 +8,74 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../static/css/normalize.css">
-    <link rel="stylesheet" href="../static/css/parts/style_header.css">
     <link rel="stylesheet" href="../static/css/style_main.css">
 
 </head>
 <body class="body">
 <header class="header">
-    <div class="logo">
-        <img src="../static/img/rr.png" alt="" height="70px" width="70px">
-        <h2 class="logo-text">Sweater</h2>
-    </div>
-    <ul class="navigation-list">
+    <a class="logo" href="/">
+        <img src="../static/img/Twitter-logo.svg.png" alt="" height="50px" width="50px">
+        <h2 class="logo-text">Twitter</h2>
+    </a>
+    <ul th:if="${currentUserId}" class="navigation-list">
         <li class="navigation-item">
             <a class="navigation-link" href="/">Main</a>
         </li>
         <li class="navigation-item">
-            <a class="navigation-link" href="/send-message">Send news</a>
-        </li>
-        <li class="navigation-item">
-            <a class="navigation-link" th:href="@{/user-messages/{user} (user = ${currentUserId})}">My messages</a>
-        </li>
-        <li class="navigation-item">
-            <a class="navigation-link" href="/profile">Profile</a>
+            <a class="navigation-link" th:href="@{/page/{user} (user = ${currentUserId})}">My Profile</a>
         </li>
         <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
             <a class="navigation-link" href="/admin-panel">Admin Panel</a>
         </li>
     </ul>
-    <img  class="avatar-picture" th:src="@{/img/{filename}(filename = ${avatar})}" width="70px" height="70px" >
-    <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
-    <form th:action="@{/logout}" method="post">
-        <input class="logout" type="submit" value="Log out"/>
+    <form th:if="${currentUserId}" th:action="@{/logout}" method="post">
+        <input class="logout" type="submit" value="Logout"/>
+    </form>
+    <form th:unless="${currentUserId}" action="/login" method="get">
+        <input class="logout" type="submit" value="Login"/>
     </form>
 </header>
 <main class="main">
-    <div class="message-container">
+    <div th:if="${currentUserId}">
+        <section class="sticky-header">
+            <div class="wrapper-sticky-header">
+                <p class="sticky-header-main">Home</p>
+            </div>
+        </section>
+        <section class="send-tweet">
+            <img class="profile-avatar-picture" th:src="@{/img/{filename}(filename = ${userProfileAvatar})}" alt="" height="50px" width="50px">
+            <div class="message-container">
+                <form class="form" th:action="@{/send-message}" method="post" enctype="multipart/form-data">
+                    <label for="text"></label>
+                    <textarea id="text" type="text" name="text"  placeholder="What's happening?" class="message-input"></textarea>
+                    <div class="send-form-wrapper">
+                        <label>
+                            <input type="file" name="file" class="file" style="display:none">
+                            <svg class="icon-picture-add" viewBox="0 0 48 48" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><path d="M48 48H0V0h48v48zM2 46h44V2H2v44z" fill="#1c9bef" class="fill-000000"></path><path d="M1 34h46v2H1zM19 18h-6c-2.206 0-4-1.794-4-4 0-2.323 2.022-4.202 4.352-3.984A5.956 5.956 0 0 1 19 6c3.309 0 6 2.691 6 6s-2.691 6-6 6zm-6-6c-1.103 0-2 .897-2 2s.897 2 2 2h6c2.206 0 4-1.794 4-4s-1.794-4-4-4a3.973 3.973 0 0 0-3.933 3.367l-.196 1.222-1.153-.448A1.971 1.971 0 0 0 13 12z" fill="#1c9bef" class="fill-000000"></path><path d="m43.105 35.447-7.073-14.146A2.341 2.341 0 0 0 33.927 20c-.834 0-1.613.448-2.034 1.168l-6.029 10.336a1 1 0 0 1-.833.495c-.34.028-.67-.157-.862-.443C24.131 31.5 20.398 26 16 26c-3.546 0-7.029 6.765-8.071 9.372l-1.857-.743C6.507 33.541 10.482 24 16 24c4.015 0 7.336 3.328 8.89 5.204l5.275-9.044A4.368 4.368 0 0 1 33.926 18c1.66 0 3.152.922 3.895 2.407l7.073 14.146-1.789.894z" fill="#1c9bef" class="fill-000000"></path></svg>
+                        </label>
+                        <button  class="submit-button" type="submit">Tweet</button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </div>
+    <section class="news-feed">
         <div class="message-item" th:each="message : ${messages}">
-            <img class="message-author-avatar" th:src="@{/img/{filename}(filename = ${message.getAuthor().getFilename()})}" width="50px" height="50px">
-            <a th:href="@{/user-messages/{user} (user = ${message.getAuthor().getId()})}"><h4 class="message-author" th:text="${message.getAuthor()}"></h4></a>
+            <img class="message-author-avatar" th:src="@{/img/{filename}(filename = ${message.getAuthor().getAvatarFilename()})}" width="50px" height="50px">
+            <a class="author-link" th:href="@{/page/{user} (user = ${message.getAuthor().getId()})}">
+                <p class="message-author" th:text="${message.getAuthor()}"></p>
+                <p class="message-author-tag" th:text="'@' + ${message.getAuthor()}"></p>
+            </a>
+            <form th:if="${isCurrentUser}" th:class="delete-icon-form" th:action="@{/message-delete/{message} (message = ${message.getId()})}" th:object="${message}" th:method="delete" >
+                <input class="delete-icon-image" type="image" src="../static/img/delete-icon.png" alt="Submit Form" />
+            </form>
             <p class="message-text" th:text="${message.getText}"></p>
             <div class="picture-container" th:if="${message.filename}">
                 <img class="message-picture" th:src="@{/img/{filename}(filename = ${message.filename})}">
             </div>
         </div>
-    </div>
+    </section>
 </main>
 </body>
 </html>

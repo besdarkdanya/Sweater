@@ -24,7 +24,7 @@ public class MainController {
             Iterable<Message> messages = messageRepo.findAll(Sort.by(Sort.Direction.DESC,"id"));
             model.addAttribute("messages",messages);
             if (user != null) {
-                model.addAttribute("avatar",user.getFilename());
+                model.addAttribute("userProfileAvatar",user.getAvatarFilename());
                 model.addAttribute("currentUserId", user.getId());
             }
             return "main";

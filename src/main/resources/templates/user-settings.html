@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мой Кринж Профиль</title>
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/parts/style_header.css">
+    <link rel="stylesheet" href="../static/css/style_profile.css">
+</head>
+<body class="body">
+<header class="header">
+    <a class="logo" href="/">
+        <img src="../static/img/Twitter-logo.svg.png" alt="" height="50px" width="50px">
+        <h2 class="logo-text">Twitter</h2>
+    </a>
+    <ul class="navigation-list">
+        <li class="navigation-item">
+            <a class="navigation-link" href="/">Main</a>
+        </li>
+        <li class="navigation-item">
+            <a class="navigation-link" th:href="@{/page/{user} (user = ${currentUserId})}">My Profile</a>
+        </li>
+        <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
+            <a class="navigation-link" href="/admin-panel">Admin Panel</a>
+        </li>
+    </ul>
+    <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
+    <form th:action="@{/logout}" method="post">
+        <input class="logout" type="submit" value="Log out"/>
+    </form>
+</header>
+    <section class="section-form">
+        <div class="container-form">
+            <h3 class="form-name">Change credential</h3>
+            <form class="form" th:action="@{/profile}" th:method="post" enctype="multipart/form-data">
+                <label >
+                    <input type="text" name="username"  placeholder="New Username" class="input">
+                </label>
+                <label >
+                    <input type="email" name="email" placeholder="New Email" class="input">
+                </label>
+                <label >
+                    <input type="password" name="password" placeholder="New Password" class="input">
+                </label>
+                <label class="avatar-input-label">
+                    <input type="file" name="file" class="file" style="display: none">
+                    Update your avatar
+                   <svg  class="icon-add-avatar" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="512px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><g><polygon points="429,328 429,277 480,277 480,235 429,235 429,184 387,184 387,235 336,235 336,277 387,277 387,328  "/><path d="M416,448c0,0,0-26.4-2.2-40.2c-1.8-10.9-16.9-25.3-81.1-48.9c-63.2-23.2-59.3-11.9-59.3-54.6c0-27.7,14.1-11.6,23.1-64.2   c3.5-20.7,6.3-6.9,13.9-40.1c4-17.4-2.7-18.7-1.9-27c0.8-8.3,1.6-15.7,3.1-32.7C313.4,119.3,293.9,64,224,64   c-69.9,0-89.4,55.3-87.5,76.4c1.5,16.9,2.3,24.4,3.1,32.7c0.8,8.3-5.9,9.6-1.9,27c7.6,33.1,10.4,19.3,13.9,40.1   c9,52.6,23.1,36.5,23.1,64.2c0,42.8,3.9,31.5-59.3,54.6c-64.2,23.5-79.4,38-81.1,48.9C32,421.6,32,448,32,448h192H416z"/></g></svg>
+                </label>
+                <button  class="submit-button" type="submit">Change my data</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

@@ -9,10 +9,10 @@
 </head>
 <body class="body">
 <header class="header">
-    <div class="logo">
-        <img src="../static/img/rr.png" alt="" height="70px" width="70px">
-        <h2 class="logo-text">Sweater</h2>
-    </div>
+    <a class="logo" href="/">
+        <img src="../static/img/Twitter-logo.svg.png" alt="" height="50px" width="50px">
+        <h2 class="logo-text">Twitter</h2>
+    </a>
     <ul class="navigation-list">
         <li class="navigation-item">
             <a class="navigation-link" href="/">Main</a>
@@ -30,7 +30,6 @@
             <a class="navigation-link" href="/admin-panel">Admin Panel</a>
         </li>
     </ul>
-    <img  class="avatar-picture" th:src="@{/img/{filename}(filename = ${avatar})}" width="70px" height="70px" >
     <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
     <form th:action="@{/logout}" method="post">
         <input class="logout" type="submit" value="Log out"/>

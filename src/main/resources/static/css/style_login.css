@@ -3,7 +3,7 @@
 }
 .section-form {
     width: 444px;
-    margin: 15vh auto;
+    margin: 5vh auto;
     background-color: white;
     box-shadow: 0 4px 18px rgba(255,255,255, 0.9);
 }
@@ -124,4 +124,18 @@ input.input::placeholder {
     line-height: 14px;
     color: #434343;
 }
+.avatar-input-label {
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+}
+.icon-add-avatar {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
 

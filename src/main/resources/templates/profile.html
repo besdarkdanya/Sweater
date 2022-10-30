@@ -1,58 +1,90 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Мой Кринж Профиль</title>
+    <title>My news</title>
     <link rel="stylesheet" href="../static/css/normalize.css">
-    <link rel="stylesheet" href="../static/css/style_profile.css">
-    <link rel="stylesheet" href="../static/css/parts/style_header.css">
+    <link rel="stylesheet" href="../static/css/user-profile-page.css">
 </head>
 <body class="body">
 <header class="header">
-    <div class="logo">
-        <img src="../static/img/rr.png" alt="" height="70px" width="70px">
-        <h2 class="logo-text">Sweater</h2>
-    </div>
-    <ul class="navigation-list">
-        <li class="navigation-item">
-            <a class="navigation-link" href="/">Main</a>
-        </li>
-        <li class="navigation-item">
-            <a class="navigation-link" href="/send-message">Send news</a>
-        </li>
-        <li class="navigation-item">
-            <a class="navigation-link" th:href="@{/user-messages/{user} (user = ${currentUserId})}">My messages</a>
-        </li>
-        <li class="navigation-item">
-            <a class="navigation-link" href="/profile">Profile</a>
-        </li>
-        <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
-            <a class="navigation-link" href="/admin-panel">Admin Panel</a>
-        </li>
-    </ul>
-    <img  class="avatar-picture" th:src="@{/img/{filename}(filename = ${avatar})}" width="70px" height="70px" >
-    <p  class="user-in" th:inline="text">Welcome home, [[${#httpServletRequest.remoteUser}]]!</p>
-    <form th:action="@{/logout}" method="post">
-        <input class="logout" type="submit" value="Log out"/>
-    </form>
+  <a class="logo" href="/">
+    <img src="../static/img/Twitter-logo.svg.png" alt="" height="50px" width="50px">
+    <h2 class="logo-text">Twitter</h2>
+  </a>
+  <ul class="navigation-list">
+    <li class="navigation-item" th:if="${currentUserId}">
+      <a class="navigation-link" href="/">Main</a>
+    </li>
+    <li class="navigation-item" th:if="${currentUserId}">
+      <a class="navigation-link" th:href="@{/page/{user} (user = ${currentUserId})}">My Profile</a>
+    </li>
+    <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
+      <a class="navigation-link" href="/admin-panel">Admin Panel</a>
+    </li>
+  </ul>
+  <form th:if="${currentUserId}" th:action="@{/logout}" method="post">
+    <input class="logout" type="submit" value="Logout"/>
+  </form>
+  <form th:unless="${currentUserId}" action="/login" method="get">
+    <input class="logout" type="submit" value="Login"/>
+  </form>
 </header>
-    <section class="section-form">
-        <div class="container-form">
-            <h3 class="form-name">Change credential</h3>
-            <form class="form" th:action="@{/profile}" th:method="post">
-                <label >
-                    <input type="text" name="username"  placeholder="New Username" class="input">
-                </label>
-                <label >
-                    <input type="email" name="email" placeholder="New Email" class="input">
-                </label>
-                <label >
-                    <input type="password" name="password" placeholder="New Password" class="input">
-                </label>
-                <button  class="submit-button" type="submit">Change my data</button>
-            </form>
-        </div>
-    </section>
+<main>
+  <section class="sticky-header">
+    <div class="wrapper-sticky-header">
+      <a class="back-link-header" href="javascript:history.back()">
+        <svg class="back-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M16 7H3.8l5.6-5.6L8 0 0 8l8 8 1.4-1.4L3.8 9H16V7Z" fill="#ffffff" fill-rule="evenodd" class="fill-000000"></path></svg>
+      </a>
+        <p class="sticky-header-username" th:text="${usernameOfThisPage}"></p>
+        <p class="sticky-header-total-tweets" th:text="${totalAmountOfTweets}"></p>
+    </div>
+  </section>
+  <section class="profile-section">
+    <img class="profile-background-picture" th:src="@{/img/{filename}(filename = ${userBackgroundImage})}" alt="" width="600px" height="230px">
+    <img class="profile-avatar-picture" th:src="@{/img/{filename}(filename = ${userProfileAvatar})}" alt="" height="160px" width="160px">
+    <a class="subscribe-edit-link" th:if="${isCurrentUser}" href="/profile">Edit Profile</a>
+    <a class="subscribe-edit-link" th:unless="${isCurrentUser}" href="#">Subscribe</a>
+    <div class="profile-wrapper">
+      <p class="sticky-header-username profile-username" th:text="${usernameOfThisPage}"></p>
+      <p class="sticky-header-total-tweets" th:text=" '@'+${usernameOfThisPage}"></p>
+      <p class="profile-description" th:text="${userProfileDescription}"></p>
+      <div class="followers-wrapper">
+        <p class="following" th:text="${Following} + ' Following'"></p>
+        <p class="followers" th:text="${Followers} + ' Followers'"></p>
+      </div>
+    </div>
+    <ul class="filter-list">
+      <li class="filter-item">
+        <a href="#" class="filter-link">Tweets</a>
+      </li>
+      <li class="filter-item">
+        <a href="#" class="filter-link">Tweets & Replies</a>
+      </li>
+      <li class="filter-item">
+        <a href="#" class="filter-link">Media</a>
+      </li>
+      <li class="filter-item">
+        <a href="#" class="filter-link">Likes</a>
+      </li>
+    </ul>
+  </section>
+  <section class="news-feed">
+    <div class="message-item" th:each="message : ${messages}">
+      <img class="message-author-avatar" th:src="@{/img/{filename}(filename = ${message.getAuthor().getAvatarFilename()})}" width="50px" height="50px">
+      <a class="author-link" th:href="@{/user-messages/{user} (user = ${message.getAuthor().getId()})}">
+        <p class="message-author" th:text="${message.getAuthor()}"></p>
+        <p class="message-author-tag" th:text="'@' + ${message.getAuthor()}"></p>
+      </a>
+      <form th:if="${isCurrentUser}" th:class="delete-icon-form" th:action="@{/message-delete/{message} (message = ${message.getId()})}" th:object="${message}" th:method="delete" >
+        <input class="delete-icon-image" type="image" src="../static/img/delete-icon.png" alt="Submit Form" />
+      </form>
+      <p class="message-text" th:text="${message.getText}"></p>
+      <div class="picture-container" th:if="${message.filename}">
+        <img class="message-picture" th:src="@{/img/{filename}(filename = ${message.filename})}">
+      </div>
+    </div>
+  </section>
+</main>
 </body>
 </html>

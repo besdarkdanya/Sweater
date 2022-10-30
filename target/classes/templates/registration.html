@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="en">
 <head>
   <title>Spring Security Example </title>
   <meta charset="utf-8">
@@ -10,24 +9,10 @@
 </head>
 <body class="body">
 <header class="header">
-  <div class="logo">
-    <img src="../static/img/rr.png" alt="" height="70px" width="70px">
-    <h2 class="logo-text">Sweater</h2>
-  </div>
-  <ul class="navigation-list">
-    <li class="navigation-item">
-      <a class="navigation-link" href="/">Main</a>
-    </li>
-    <li class="navigation-item">
-      <a class="navigation-link" href="">Send news</a>
-    </li>
-    <li class="navigation-item">
-      <a class="navigation-link" href="/profile">Profile</a>
-    </li>
-    <li th:if="${#authentication.name == 'admin'}"  class="navigation-item">
-      <a class="navigation-link" href="/admin-panel">Admin Panel</a>
-    </li>
-  </ul>
+  <a class="logo" href="/">
+    <img src="../static/img/Twitter-logo.svg.png" alt="" height="50px" width="50px">
+    <h2 class="logo-text">Twitter</h2>
+  </a>
 </header>
 <section class="section-form">
   <div class="container-form">
@@ -35,10 +20,6 @@
       <h3 class="form-name">Registration</h3>
       <a class="alternative-form" th:href="@{/login}">Login</a>
     </div>
-    <ul th:if="${!map.isEmpty()}">
-      <li th:each="error : ${map}" th:text="${error.getValue()}" class="error" />
-    </ul>
-    <p th:if="${validationError}" th:text="${validationError}" class="error"></p>
     <form  class="form" th:action="@{/registration}" method="post" enctype="multipart/form-data">
       <label >
         <input type="text" name="username"  placeholder="Username" class="input">
@@ -52,12 +33,10 @@
       <label >
         <input type="password" name="password2" placeholder="Password Confirm" class="input">
       </label>
-      <label for="file" ></label>
-      <input  id="file" type="file" name="file" class="file">
-      <label class="checkbox">
-        <input type="checkbox" name="terms">
-        <span class="custom-checkbox"></span>
-        Agree to Terms and Conditions
+      <label class="avatar-input-label">
+        <input type="file" name="file" class="file" style="display: none">
+          Attach your avatar
+        <svg  class="icon-add-avatar" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="512px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"><g><polygon points="429,328 429,277 480,277 480,235 429,235 429,184 387,184 387,235 336,235 336,277 387,277 387,328  "/><path d="M416,448c0,0,0-26.4-2.2-40.2c-1.8-10.9-16.9-25.3-81.1-48.9c-63.2-23.2-59.3-11.9-59.3-54.6c0-27.7,14.1-11.6,23.1-64.2   c3.5-20.7,6.3-6.9,13.9-40.1c4-17.4-2.7-18.7-1.9-27c0.8-8.3,1.6-15.7,3.1-32.7C313.4,119.3,293.9,64,224,64   c-69.9,0-89.4,55.3-87.5,76.4c1.5,16.9,2.3,24.4,3.1,32.7c0.8,8.3-5.9,9.6-1.9,27c7.6,33.1,10.4,19.3,13.9,40.1   c9,52.6,23.1,36.5,23.1,64.2c0,42.8,3.9,31.5-59.3,54.6c-64.2,23.5-79.4,38-81.1,48.9C32,421.6,32,448,32,448h192H416z"/></g></svg>
       </label>
       <button  class="submit-button" type="submit">Create account</button>
     </form>

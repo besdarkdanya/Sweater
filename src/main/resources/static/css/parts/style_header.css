@@ -2,12 +2,13 @@
     display: flex;
     padding: 20px 35px;
     align-items: center;
-    justify-content: space-around;
     background-color: black;
+    justify-content: space-between;
 }
 .logo {
     display: flex;
     align-items: center;
+    margin-right: 200px;
 }
 .logo-text {
     padding-left: 15px;
@@ -20,7 +21,7 @@
 .navigation-list {
     display: flex;
     list-style-type: none;
-    margin: 0 0 0 50px;
+    margin: 0 0 0 100px;
     padding: 0;
 }
 .navigation-link {
@@ -51,7 +52,6 @@
 .user-in {
     margin-bottom: 0;
     color: white;
-}
-.avatar-picture {
-    margin-left: 200px;
+    padding-right: 25px;
+    margin-left: 250px;
 }

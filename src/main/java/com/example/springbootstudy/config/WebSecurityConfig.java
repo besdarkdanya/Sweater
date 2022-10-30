@@ -2,6 +2,7 @@ package com.example.springbootstudy.config;
 
 
 import com.example.springbootstudy.services.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,11 +15,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     private final CustomUserDetailsService customUserDetailsService;
-    @Autowired
+
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -31,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers( "/registration","/activate/*","/static/**").permitAll()
+                        .antMatchers("/","/registration","/activate/*","/static/**","/img/**","/page/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -41,7 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout(LogoutConfigurer::permitAll);
 
     }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
