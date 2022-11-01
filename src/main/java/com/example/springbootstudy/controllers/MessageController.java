@@ -6,6 +6,7 @@ import com.example.springbootstudy.repos.MessageRepo;
 import com.example.springbootstudy.services.FileService;
 import com.example.springbootstudy.services.MessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +19,14 @@ import java.io.IOException;
 import java.util.Map;
 
 @Controller
-@RequiredArgsConstructor
 public class MessageController {
 
-    private final FileService fileService;
-    private final MessageRepo messageRepo;
-    private final MessageService messageService;
+     @Autowired
+     private FileService fileService;
+     @Autowired
+    private MessageRepo messageRepo;
+    @Autowired
+     private MessageService messageService;
 
     @PostMapping("/send-message")
     public String sendNewMessage(@AuthenticationPrincipal User user,

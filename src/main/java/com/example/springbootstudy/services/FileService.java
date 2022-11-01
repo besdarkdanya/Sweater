@@ -1,7 +1,5 @@
 package com.example.springbootstudy.services;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,8 +11,6 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class FileService {
 
     @Value("${upload.path}")

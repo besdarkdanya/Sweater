@@ -10,30 +10,26 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     private final CustomUserDetailsService customUserDetailsService;
-
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoderConfig passwordEncoderConfig;
 
     @Autowired
-    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, PasswordEncoder passwordEncoder) {
+    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService, PasswordEncoderConfig passwordEncoder) {
         this.customUserDetailsService = customUserDetailsService;
-        this.passwordEncoder = passwordEncoder;
+        this.passwordEncoderConfig = passwordEncoder;
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/","/registration","/activate/*","/static/**","/img/**","/page/**").permitAll()
+                        .antMatchers("/","/registration","/activate/*","/img/**","/page/**","/static/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -47,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
        authenticationManagerBuilder.userDetailsService(customUserDetailsService)
-               .passwordEncoder(passwordEncoder);
+               .passwordEncoder(passwordEncoderConfig.getPasswordEncoder());
     }
 
 }

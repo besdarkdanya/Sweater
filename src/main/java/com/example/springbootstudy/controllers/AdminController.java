@@ -3,6 +3,7 @@ package com.example.springbootstudy.controllers;
 import com.example.springbootstudy.domain.Role;
 import com.example.springbootstudy.domain.User;
 import com.example.springbootstudy.repos.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
-    private final UserRepo userRepo;
-
-    public AdminController(UserRepo userRepo) {
-        this.userRepo = userRepo;
-    }
+    @Autowired
+    private UserRepo userRepo;
 
 
     @GetMapping()

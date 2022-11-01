@@ -4,8 +4,7 @@ package com.example.springbootstudy.services;
 import com.example.springbootstudy.domain.Role;
 import com.example.springbootstudy.domain.User;
 import com.example.springbootstudy.repos.UserRepo;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,15 +15,21 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepo userRepo;
 
     private final PasswordEncoder passwordEncoder;
-    private final SmtpMailSender mailService;
+    private final MailService mailService;
     private final FileService fileService;
+
+    @Autowired
+    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder, MailService mailService, FileService fileService) {
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
+        this.mailService = mailService;
+        this.fileService = fileService;
+    }
 
     @Value("${hostname}")
     private String hostname;
@@ -38,7 +43,6 @@ public class UserService {
             user.getRoles().add(Role.USER);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setActivationCode(UUID.randomUUID().toString());
-            log.info("Saving new User with username {}",user.getUsername());
             userRepo.save(user);
 
             if (!user.getEmail().isEmpty()) {

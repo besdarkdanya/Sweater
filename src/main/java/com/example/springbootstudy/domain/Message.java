@@ -15,8 +15,6 @@ public class Message {
     @Length(max = 2048,message = "Message is too big. (Limit is 2048 character)")
     private String text;
 
-    private String tag;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
@@ -36,7 +34,6 @@ public class Message {
 
     public Message(String text, String tag, User user) {
         this.text = text;
-        this.tag = tag;
         this.author = user;
     }
 
@@ -54,14 +51,6 @@ public class Message {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
     }
 
     public String getFilename() {

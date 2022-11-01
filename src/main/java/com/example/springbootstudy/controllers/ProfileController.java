@@ -3,6 +3,8 @@ package com.example.springbootstudy.controllers;
 import com.example.springbootstudy.domain.User;
 import com.example.springbootstudy.services.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,15 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Controller
-@RequiredArgsConstructor
 public class ProfileController {
 
+
     private final UserService userService;
+
+    @Autowired
+    public ProfileController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/profile")
     public String myProfile(@AuthenticationPrincipal User user, Model model) {

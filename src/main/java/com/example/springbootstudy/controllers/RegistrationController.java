@@ -3,8 +3,7 @@ package com.example.springbootstudy.controllers;
 import com.example.springbootstudy.domain.User;
 import com.example.springbootstudy.services.FileService;
 import com.example.springbootstudy.services.UserService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +20,13 @@ import java.util.Map;
 
 
 @Controller
-@Slf4j
-@RequiredArgsConstructor
 public class RegistrationController {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    private final FileService fileService;
+    @Autowired
+    private FileService fileService;
 
     @GetMapping("/registration")
     public String registration(){

@@ -3,8 +3,7 @@ package com.example.springbootstudy.controllers;
 import com.example.springbootstudy.domain.Message;
 import com.example.springbootstudy.domain.User;
 import com.example.springbootstudy.repos.MessageRepo;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@Slf4j
-@RequiredArgsConstructor
+
 public class MainController {
 
-    private final MessageRepo messageRepo;
+    @Autowired
+    private  MessageRepo messageRepo;
 
     @GetMapping("")
     public String main(Model model,@AuthenticationPrincipal User user) {
