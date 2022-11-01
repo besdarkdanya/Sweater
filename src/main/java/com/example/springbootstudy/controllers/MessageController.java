@@ -65,6 +65,7 @@ public class MessageController {
             model.addAttribute("Following",user.getSubscriptions().size());
             model.addAttribute("Followers",user.getSubscribers().size());
             model.addAttribute("isCurrentUser",currentUser.equals(user));
+            model.addAttribute("isAuthUserSubscribe",user.getSubscribers().contains(currentUser));
         } catch (Exception e) {
             model.addAttribute("currentUserId",false);
         }

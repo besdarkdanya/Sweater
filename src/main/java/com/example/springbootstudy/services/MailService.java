@@ -2,6 +2,7 @@ package com.example.springbootstudy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class MailService {
     private String username;
 
 
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Autowired
     public MailService(JavaMailSender mailSender) {

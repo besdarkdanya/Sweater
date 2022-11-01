@@ -44,7 +44,8 @@
     <img class="profile-background-picture" th:src="@{/img/{filename}(filename = ${userBackgroundImage})}" alt="" width="600px" height="230px">
     <img class="profile-avatar-picture" th:src="@{/img/{filename}(filename = ${userProfileAvatar})}" alt="" height="160px" width="160px">
     <a class="subscribe-edit-link" th:if="${isCurrentUser}" href="/profile">Edit Profile</a>
-    <a class="subscribe-edit-link" th:unless="${isCurrentUser}" href="#">Subscribe</a>
+    <a class="subscribe-edit-link" th:if="${isAuthUserSubscribe}" th:href="@{/unsubscribe/{user} (user= ${currentUserId})}">Unsubscribe</a>
+    <a class="subscribe-edit-link" th:unless="${isAuthUserSubscribe}" th:href="@{/subscribe/{user} (user= ${currentUserId})}">Subscribe</a>
     <div class="profile-wrapper">
       <p class="sticky-header-username profile-username" th:text="${usernameOfThisPage}"></p>
       <p class="sticky-header-total-tweets" th:text=" '@'+${usernameOfThisPage}"></p>
